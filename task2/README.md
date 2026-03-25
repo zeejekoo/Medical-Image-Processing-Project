@@ -1,44 +1,84 @@
-Task 2: B-mode Ultrasound Imaging
+# Task 2 - B-mode Ultrasound Imaging
 
-📌 Overview
+## Overview
+Reconstruct a B-mode ultrasound image from raw RF data using beamforming and signal processing techniques.
 
-This task focuses on reconstructing a B-mode ultrasound image from raw RF data.
-The pipeline follows the standard ultrasound imaging process used in medical imaging systems.
+---
 
-⸻
+## 1. Delay-and-Sum (DAS) Beamforming
 
-⚙️ Processing Pipeline
+Reconstruct the ultrasound signal by aligning echoes from multiple transducer elements:
 
-The reconstruction consists of the following steps:
-	1.	Delay-and-Sum (DAS) Beamforming
-	•	Aligns signals from multiple transducer elements
-	•	Improves signal focus and spatial resolution
-	2.	Hilbert Transform
-	•	Converts RF signal to analytic signal
-	•	Extracts the envelope of the signal
-	3.	Log Compression
-	•	Compresses dynamic range for visualization
-	•	Enhances contrast in the image
-	4.	Scan Conversion
-	•	Converts polar coordinates to Cartesian grid
-	•	Produces displayable B-mode image
+$$
+s(x,z) = \sum_{i=1}^{N} r_i\left(t - \tau_i(x,z)\right)
+$$
 
-⸻
+- $r_i(t)$: received RF signal from the $i$-th element  
+- $\tau_i(x,z)$: time delay for focusing at position $(x,z)$  
+- $N$: number of transducer elements  
 
-📂 Data Description
-	•	Input: Raw RF ultrasound data
-	•	Output: Reconstructed B-mode image (grayscale)
+This step improves spatial resolution by constructive interference.
 
-⸻
+---
 
-🛠️ Implementation Details
-	•	Language: Python
-	•	Libraries: NumPy, SciPy, Matplotlib
+## 2. Hilbert Transform (Envelope Detection)
 
-⸻
+Convert the RF signal into an analytic signal:
 
-📊 Results
+$$
+s_a(t) = s(t) + j \cdot \mathcal{H}\{s(t)\}
+$$
 
-The final output is a 2D grayscale B-mode image representing tissue structures.
+Extract the envelope:
 
-[👉 Open Notebook](./Task2.ipynb)
+$$
+A(t) = |s_a(t)|
+$$
+
+- $\mathcal{H}\{s(t)\}$: Hilbert transform  
+- $A(t)$: amplitude (envelope) of the signal  
+
+---
+
+## 3. Log Compression
+
+Compress the dynamic range for visualization:
+
+$$
+I(x,z) = 20 \log_{10}\left(\frac{A(x,z)}{A_{\max}}\right)
+$$
+
+- Enhances contrast  
+- Maps large intensity variations into displayable range  
+
+---
+
+## 4. Scan Conversion
+
+Convert beamformed data into Cartesian coordinates:
+
+$$
+(r,\theta) \rightarrow (x,y)
+$$
+
+- Interpolate data from polar grid to Cartesian grid  
+- Generate a 2D image suitable for display  
+
+---
+
+## 5. Dynamic Range Adjustment
+
+Limit intensity values for better visualization:
+
+$$
+I_{\text{final}} = \max(I(x,z),\ DR_{\text{min}})
+$$
+
+- $DR_{\text{min}}$: minimum dynamic range threshold  
+- Improves visibility of soft tissues  
+
+---
+
+## Results
+
+> 📷 Result images and reconstructed B-mode outputs are in the notebook: [`Task2.ipynb`](./Task2.ipynb)

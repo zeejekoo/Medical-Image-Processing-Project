@@ -7,6 +7,6 @@ biomedical image processing tasks using MRI, CT, and Ultrasound data.
 | [Task 1](./task1/) | Color Image Processing with pepperImage |
 | [Task 2](./task2/) | B-mode Ultrasound imaging |
 | [Task 3](./task3/) | Doppler + SVD |
-| [Task 4](./task4/) | MRI reconstruction  |
-| [Task 5](./task5/) | Ultrasound blood flow extraction |
-
+| [Task 4](./task4/) | CT reconstructdion  |
+| [Task 5](./task5/) | MRI-Reconstruct: From K-Space to DICOM|
+| [Task 6](./task6/) | Advanced CT Segmentation and Bone Detection|
